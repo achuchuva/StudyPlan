@@ -1,0 +1,212 @@
+{
+    "Days": [
+        {
+            "date": "2024-02-08",
+            "TimeBlocks": [
+                {
+                    "startTime": "12:00:00",
+                    "duration": "00:00:00"
+                },
+                {
+                    "startTime": "17:00:00",
+                    "duration": "00:00:00"
+                }
+            ],
+            "StudyBlocks": [
+                {
+                    "task": {
+                        "name": "Complete Analysis Report",
+                        "estimatedTime": "00:00:00",
+                        "subject": {
+                            "name": "Physics"
+                        },
+                        "dueDate": "2024-02-10T00:00:00"
+                    },
+                    "startTime": "09:00:00",
+                    "duration": "01:30:00"
+                },
+                {
+                    "task": {
+                        "name": "Complete Analysis Report",
+                        "estimatedTime": "00:00:00",
+                        "subject": {
+                            "name": "Physics"
+                        },
+                        "dueDate": "2024-02-10T00:00:00"
+                    },
+                    "startTime": "10:30:00",
+                    "duration": "01:30:00"
+                },
+                {
+                    "task": {
+                        "name": "Complete Analysis Report",
+                        "estimatedTime": "00:00:00",
+                        "subject": {
+                            "name": "Physics"
+                        },
+                        "dueDate": "2024-02-10T00:00:00"
+                    },
+                    "startTime": "13:00:00",
+                    "duration": "01:30:00"
+                },
+                {
+                    "task": {
+                        "name": "Exercise 11F",
+                        "estimatedTime": "00:00:00",
+                        "subject": {
+                            "name": "Maths"
+                        },
+                        "dueDate": "2024-02-11T00:00:00"
+                    },
+                    "startTime": "14:30:00",
+                    "duration": "01:30:00"
+                },
+                {
+                    "task": {
+                        "name": "Exercise 11F",
+                        "estimatedTime": "00:00:00",
+                        "subject": {
+                            "name": "Maths"
+                        },
+                        "dueDate": "2024-02-11T00:00:00"
+                    },
+                    "startTime": "16:00:00",
+                    "duration": "01:00:00"
+                }
+            ]
+        },
+        {
+            "date": "2024-02-09",
+            "TimeBlocks": [
+                {
+                    "startTime": "12:00:00",
+                    "duration": "00:00:00"
+                },
+                {
+                    "startTime": "13:00:00",
+                    "duration": "04:00:00"
+                }
+            ],
+            "StudyBlocks": [
+                {
+                    "task": {
+                        "name": "Complete Analysis Report",
+                        "estimatedTime": "00:00:00",
+                        "subject": {
+                            "name": "Physics"
+                        },
+                        "dueDate": "2024-02-10T00:00:00"
+                    },
+                    "startTime": "09:00:00",
+                    "duration": "00:30:00"
+                },
+                {
+                    "task": {
+                        "name": "Read 12 Angry Men",
+                        "estimatedTime": "00:00:00",
+                        "subject": {
+                            "name": "English"
+                        },
+                        "dueDate": "2024-02-12T00:00:00"
+                    },
+                    "startTime": "09:30:00",
+                    "duration": "01:30:00"
+                },
+                {
+                    "task": {
+                        "name": "Exercise 11F",
+                        "estimatedTime": "00:00:00",
+                        "subject": {
+                            "name": "Maths"
+                        },
+                        "dueDate": "2024-02-11T00:00:00"
+                    },
+                    "startTime": "11:00:00",
+                    "duration": "00:30:00"
+                },
+                {
+                    "task": {
+                        "name": "Read 12 Angry Men",
+                        "estimatedTime": "00:00:00",
+                        "subject": {
+                            "name": "English"
+                        },
+                        "dueDate": "2024-02-12T00:00:00"
+                    },
+                    "startTime": "11:30:00",
+                    "duration": "00:30:00"
+                }
+            ]
+        },
+        {
+            "date": "2024-02-10",
+            "TimeBlocks": [
+                {
+                    "startTime": "09:00:00",
+                    "duration": "03:00:00"
+                },
+                {
+                    "startTime": "13:00:00",
+                    "duration": "04:00:00"
+                }
+            ],
+            "StudyBlocks": []
+        },
+        {
+            "date": "2024-02-11",
+            "TimeBlocks": [
+                {
+                    "startTime": "09:00:00",
+                    "duration": "03:00:00"
+                },
+                {
+                    "startTime": "13:00:00",
+                    "duration": "04:00:00"
+                }
+            ],
+            "StudyBlocks": []
+        },
+        {
+            "date": "2024-02-12",
+            "TimeBlocks": [
+                {
+                    "startTime": "09:00:00",
+                    "duration": "03:00:00"
+                },
+                {
+                    "startTime": "13:00:00",
+                    "duration": "04:00:00"
+                }
+            ],
+            "StudyBlocks": []
+        },
+        {
+            "date": "2024-02-13",
+            "TimeBlocks": [
+                {
+                    "startTime": "09:00:00",
+                    "duration": "03:00:00"
+                },
+                {
+                    "startTime": "13:00:00",
+                    "duration": "04:00:00"
+                }
+            ],
+            "StudyBlocks": []
+        },
+        {
+            "date": "2024-02-14",
+            "TimeBlocks": [
+                {
+                    "startTime": "09:00:00",
+                    "duration": "03:00:00"
+                },
+                {
+                    "startTime": "13:00:00",
+                    "duration": "04:00:00"
+                }
+            ],
+            "StudyBlocks": []
+        }
+    ]
+}
