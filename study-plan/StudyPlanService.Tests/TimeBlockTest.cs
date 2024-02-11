@@ -10,6 +10,7 @@ public class TimeBlockTest
 
         timeBlock.UpdateTimeBlock(new TimeSpan(1, 30, 0));
 
-        Assert.Equal(new TimeBlock(new TimeOnly(12, 0, 0), TimeSpan.Zero), timeBlock);
+        Assert.Equal(new TimeOnly(10, 30, 0), timeBlock.startTime);
+        Assert.Equal(new TimeSpan(1, 30, 0), timeBlock.duration);
     }
 }

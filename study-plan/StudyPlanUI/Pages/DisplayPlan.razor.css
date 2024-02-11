@@ -1,0 +1,17 @@
+.week {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.times {
+  display: flex;
+  flex-direction: column;
+}
+
+.time {
+  height: 90px;
+  width: 100px;
+  border-bottom: 1px solid rgb(78, 78, 78);
+  text-align: center;
+}

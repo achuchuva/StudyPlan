@@ -1,3 +1,5 @@
+namespace StudyPlan.Data;
+
 public class StudyBlock
 {
     public StudyBlock(StudyTask task, TimeOnly startTime, TimeSpan duration)

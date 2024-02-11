@@ -1,7 +1,9 @@
+namespace StudyPlan.Data;
+
 public class Scheduler
 {
-    public TimeSpan studyPeriod = TimeSpan.FromHours(1.5);
-    private List<StudyTask> tasks = new List<StudyTask>();
+    public TimeSpan studyPeriod = TimeSpan.FromHours(1);
+    protected List<StudyTask> tasks = new List<StudyTask>();
 
     public Scheduler(List<StudyTask> tasks)
     {
@@ -10,10 +12,9 @@ public class Scheduler
 
     public virtual WeekPlan CreatePlan()
     {
-        // For the first version, we will assume that each 'study block' lasts 1.5 hours
+        // The basic Scheduler has a constant study block of 1 hour
         // In addition, the student completes work in two periods daily
         // From 9am to 12pm followed by an hour break and then from 1pm to 5pm
-        // Due dates are ignored
 
         // First iteration: an index is stored to keep track of the current task to be completed
         // The index will keep incrementing and looping back around

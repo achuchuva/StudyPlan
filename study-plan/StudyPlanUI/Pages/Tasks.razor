@@ -1,0 +1,57 @@
+﻿@page "/tasks"
+@using StudyPlan.Data;
+@using System;
+@using System.Text.Json;
+
+<h1>Tasks</h1>
+<br>
+<label>Name:</label>
+<input placeholder="Enter name" @bind="name" />
+<br><br>
+<label>Subject:</label>
+<input placeholder="Enter subject" @bind="subject" />
+<br><br>
+<label>Due date:</label>
+<input type="datetime-local" @bind="date" />
+<br><br>
+<label for="estimated-time">Estimated time to complete:</label>
+<select name="estimated-time" id="estimated-time" @bind="estimatedTime">
+    <option value="0.5">30 minutes</option>
+    <option value="1">1 hour</option>
+    <option value="1.5">1 hour 30 minutes</option>
+    <option value="2">2 hours</option>
+    <option value="3">3 hours</option>
+    <option value="5">5 hours</option>
+    <option value="10">10 hours</option>
+    <option value="24">1 day</option>
+    <option value="48">2 days</option>
+    <option value="168">1 week</option>
+</select>
+<br><br>
+<button @onclick="AddTask">Add Task</button>
+<br><br>
+<ul>
+@foreach (StudyTask task in TaskManager.tasks)
+{
+    <li>@task.name - @task.subject.name</li>
+}
+</ul>
+
+@code {
+    private string name;
+    private string subject;
+    private DateTime date = DateTime.Today;
+    private float estimatedTime;
+
+    private void AddTask()
+    {
+        TaskManager.tasks.Add(new StudyTask(name, ConvertToTimeSpan(estimatedTime), new Subject(subject), date));
+    }
+
+    public TimeSpan ConvertToTimeSpan(float hours)
+    {
+        int totalMinutes = (int)(hours * 60);
+
+        return TimeSpan.FromMinutes(totalMinutes);
+    }
+}

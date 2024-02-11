@@ -1,0 +1,18 @@
+.day {
+  width: 175px;
+  position: relative;
+}
+
+.day-of-week {
+  height: 90px;
+  text-align: center;
+}
+
+.study-block {
+  width: 175px;
+  border: 1px solid black;
+  background-color: rgb(18, 120, 223);
+  color: #fff;
+  position: absolute;
+  padding: 2px;
+}

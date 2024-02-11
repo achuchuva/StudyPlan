@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudyPlanService", "StudyPl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudyPlanService.Tests", "StudyPlanService.Tests\StudyPlanService.Tests.csproj", "{D0AE2988-A0DB-47B3-B6F5-51DB7EF6E296}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudyPlanUI", "StudyPlanUI\StudyPlan.csproj", "{AF40203D-EF39-4A1B-A386-71DCBC8BF041}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

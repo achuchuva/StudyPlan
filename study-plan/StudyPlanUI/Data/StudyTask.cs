@@ -1,6 +1,8 @@
-public class Task
+namespace StudyPlan.Data;
+
+public class StudyTask
 {
-    public Task(string name, TimeSpan estimatedTime, Subject subject, DateTime dueDate)
+    public StudyTask(string name, TimeSpan estimatedTime, Subject subject, DateTime dueDate)
     {
         this.name = name;
         this.estimatedTime = estimatedTime;

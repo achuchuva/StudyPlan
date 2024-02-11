@@ -1,0 +1,24 @@
+@using StudyPlan.Data
+
+<div class="day">
+    <div class="day-of-week">@day.date.DayOfWeek</div>
+    @foreach(StudyBlock studyBlock in day.StudyBlocks)
+    {
+        <div class="study-block" style="@GetStyle(studyBlock.startTime, studyBlock.duration)">
+            @studyBlock.startTime.ToShortTimeString() - @studyBlock.task.name
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter]
+    public DayPlan day { get; set; }
+
+    public string GetStyle(TimeOnly startTime, TimeSpan duration)
+    {
+        double position = (startTime.Hour * 60 + startTime.Minute) - 480;
+        double height = (duration.TotalMinutes);
+
+        return $"top: {position * 1.5}px; height: {height * 1.5}px";
+    }
+}
