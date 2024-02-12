@@ -28,4 +28,9 @@ public class DayPlan
             new TimeBlock(new TimeOnly(13, 0, 0), new TimeSpan(4, 0, 0)),
         };
     }
+
+    public void AssignStudyBlocks()
+    {
+        
+    }
 }

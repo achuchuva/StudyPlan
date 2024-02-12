@@ -11,14 +11,13 @@ public class Program
             new StudyTask("Complete Analysis Report", new TimeSpan(5, 0, 0), new Subject("Physics"), new DateTime(2024, 2, 10)),
         };
 
-        WeekPlan weekPlan = new Scheduler(tasks).CreatePlan();
+        StudyTaskManager studyTaskManager = new StudyTaskManager();
 
-        // Convert object to JSON string
-        string jsonString = JsonSerializer.Serialize(weekPlan);
-
-        // Write JSON string to file
-        File.WriteAllText("output.json", jsonString);
-
-        Console.WriteLine("JSON file created successfully.");
+        studyTaskManager.CreateTask(tasks[1]);
+        StudyTask task = studyTaskManager.GetTask(2);
+        Console.WriteLine(task.name);
+        Console.WriteLine(task.subject.name);
+        Console.WriteLine(task.estimatedTime);
+        Console.WriteLine(task.dueDate);
     }
 }

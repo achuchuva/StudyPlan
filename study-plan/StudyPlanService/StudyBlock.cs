@@ -1,13 +1,9 @@
-public class StudyBlock
+public class StudyBlock : TimeBlock
 {
-    public StudyBlock(StudyTask task, TimeOnly startTime, TimeSpan duration)
+    public StudyBlock(StudyTask task, TimeOnly startTime, TimeSpan duration) : base (startTime, duration)
     {
         this.task = task;
-        this.startTime = startTime;
-        this.duration = duration;
     }
 
     public StudyTask task { get; set; }
-    public TimeOnly startTime { get; set; }
-    public TimeSpan duration { get; set; }
 }

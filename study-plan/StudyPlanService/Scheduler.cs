@@ -1,23 +1,18 @@
 public class Scheduler
 {
-    public TimeSpan studyPeriod = TimeSpan.FromHours(1.5);
-    private List<StudyTask> tasks = new List<StudyTask>();
+    public TimeSpan studyPeriod = TimeSpan.FromHours(1);
+    private List<StudyTask> tasks;
 
     public Scheduler(List<StudyTask> tasks)
     {
-        this.tasks = tasks;
+        this.tasks = new List<StudyTask>(tasks);
     }
 
     public virtual WeekPlan CreatePlan()
     {
-        // For the first version, we will assume that each 'study block' lasts 1.5 hours
+        // The basic Scheduler has a constant study block of 1 hour
         // In addition, the student completes work in two periods daily
         // From 9am to 12pm followed by an hour break and then from 1pm to 5pm
-        // Due dates are ignored
-
-        // First iteration: an index is stored to keep track of the current task to be completed
-        // The index will keep incrementing and looping back around
-        // Completed tasks should be either REMOVED or SKIPPED
 
         // Create the week with starting date of tomorrow
         WeekPlan plannedWeek = new WeekPlan(DateOnly.FromDateTime(DateTime.Today).AddDays(1));
@@ -32,6 +27,7 @@ public class Scheduler
             }
 
             // Assign the study blocks of each day
+            // Should be part of the DayPlan class
             AssignStudyBlocks(day);
         }
 
@@ -95,6 +91,7 @@ public class Scheduler
 
     public virtual StudyTask SelectTask(DateTime currentDate)
     {
+        // Should likely be done in a TaskManager class separately
         // Get the task based on index
         double priority = double.NegativeInfinity;
         int taskIndex = 0;
@@ -128,6 +125,7 @@ public class Scheduler
 
     public virtual void UpdateTasks(StudyTask task)
     {
+        // Also done in TaskManager
         // Remove task if it has been completed
         if (task.estimatedTime == TimeSpan.Zero)
         {
