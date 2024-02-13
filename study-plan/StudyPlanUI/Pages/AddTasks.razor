@@ -1,0 +1,50 @@
+﻿@page "/addtasks"
+@using StudyPlan.Data;
+@using System;
+@using System.Text.Json;
+
+<h1>Add Tasks</h1>
+<br>
+<label>Name:</label>
+<input placeholder="Enter name" @bind="name" />
+<br><br>
+<label for="subject">Subject:</label>
+<select name="subject" id="subject" @bind="subjectId">
+    @foreach (Subject subject in Subject.FetchAll())
+    {
+        <option value="@subject.id">@subject.name</option>
+    }
+</select>
+<br><br>
+<label>Due date:</label>
+<input type="datetime-local" @bind="date" />
+<br><br>
+<label for="estimated-time">Estimated time to complete:</label>
+<select name="estimated-time" id="estimated-time" @bind="estimatedTime">
+    <option value="00:30:00">30 minutes</option>
+    <option value="01:00:00">1 hour</option>
+    <option value="01:30:00">1 hour 30 minutes</option>
+    <option value="02:00:00">2 hours</option>
+    <option value="03:00:00">3 hours</option>
+    <option value="05:00:00">5 hours</option>
+    <option value="10:00:00">10 hours</option>
+    <option value="1.00:00:00">1 day</option>
+    <option value="2.00:00:00">2 days</option>
+    <option value="7.00:00:00">1 week</option>
+</select>
+<br><br>
+<button @onclick="AddTask">Add Task</button>
+
+@code {
+    private string name;
+    private int subjectId;
+    private DateTime date = DateTime.Today;
+    private string estimatedTime;
+
+    private void AddTask()
+    {
+        StudyTask task = new StudyTask(name, TimeSpan.Parse(estimatedTime), Subject.Fetch(subjectId), date);
+        task.Create();
+        Console.WriteLine("Task created successfully!");
+    }
+}

@@ -1,0 +1,52 @@
+@using StudyPlan.Data;
+@using System;
+@page "/subjects"
+
+<h1>Subjects</h1>
+
+<ul class="list-unstyled">
+    @foreach (Subject subject in subjects)
+    {
+        <li>
+            <input @bind="subject.name" />
+            <button @onclick="() => UpdateSubject(subject)">Update</button>
+            <button @onclick="() => DeleteSubject(subject.id)">Delete</button>
+        </li>
+    }
+</ul>
+
+<input placeholder="New subject" @bind="newSubject" />
+<button @onclick="AddSubject">Add Subject</button>
+
+@code {
+    private List<Subject> subjects = new List<Subject>();
+    private string newSubject;
+
+    protected override void OnInitialized()
+    {
+        subjects = Subject.FetchAll();
+    }
+
+    private void AddSubject()
+    {
+        if (!string.IsNullOrWhiteSpace(newSubject))
+        {
+            Subject subject = new Subject(newSubject);
+            subject.Create();
+            subjects = Subject.FetchAll();
+        }
+    }
+
+    private void UpdateSubject(Subject subject)
+    {
+        subject.Update();
+        subjects = Subject.FetchAll();
+    }
+
+    private void DeleteSubject(int id)
+    {
+        Subject subject = Subject.Fetch(id);
+        subject.Delete();
+        subjects = Subject.FetchAll();
+    }
+}

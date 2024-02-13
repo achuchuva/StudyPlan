@@ -26,6 +26,6 @@
 
     protected override void OnInitialized()
     {
-        weekPlan = new Scheduler(TaskManager.tasks).CreatePlan();
+        weekPlan = new Scheduler(StudyTask.FetchAll()).CreatePlan();
     }
 }

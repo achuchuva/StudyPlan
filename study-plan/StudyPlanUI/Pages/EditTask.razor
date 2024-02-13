@@ -1,0 +1,64 @@
+@using StudyPlan.Data;
+@using System;
+@using System.Text.Json;
+
+<h1>Edit Task</h1>
+<br>
+<label>Name:</label>
+<input @bind="studyTask.name" />
+<br><br>
+<label for="subject">Subject:</label>
+<select name="subject" id="subject" @bind="studyTask.subject.id">
+    @foreach (Subject subject in subjects)
+    {
+        <option value="@subject.id">@subject.name</option>
+    }
+</select>
+<br><br>
+<label>Due date:</label>
+<input type="datetime-local" @bind="studyTask.dueDate" />
+<br><br>
+<label for="estimated-time">Estimated time to complete:</label>
+<select name="estimated-time" id="estimated-time" @bind="estimatedTime">
+    <option value="00:30:00">30 minutes</option>
+    <option value="01:00:00">1 hour</option>
+    <option value="01:30:00">1 hour 30 minutes</option>
+    <option value="02:00:00">2 hours</option>
+    <option value="03:00:00">3 hours</option>
+    <option value="05:00:00">5 hours</option>
+    <option value="10:00:00">10 hours</option>
+    <option value="1.00:00:00">1 day</option>
+    <option value="2.00:00:00">2 days</option>
+    <option value="7.00:00:00">1 week</option>
+</select>
+<br><br>
+<button @onclick="SaveTask">Save Task</button>
+<br><br><br><br><br><br>
+<button @onclick="DeleteTask">Delete Task</button>
+
+@code {
+    [Parameter]
+    public int id { get; set; }
+    private StudyTask studyTask;
+    private string estimatedTime;
+    private List<Subject> subjects;
+
+    protected override void OnInitialized()
+    {
+        studyTask = StudyTask.Fetch(id);
+        subjects = Subject.FetchAll();
+    }
+
+    private void SaveTask()
+    {
+        studyTask.estimatedTime = TimeSpan.Parse(estimatedTime);
+        studyTask.Update();
+        Console.WriteLine("Task updated successfully!");
+    }
+
+    private void DeleteTask()
+    {
+        studyTask.Delete();
+        Console.WriteLine("Task deleted successfully!");
+    }
+}
