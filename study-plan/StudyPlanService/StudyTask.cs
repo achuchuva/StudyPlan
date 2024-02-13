@@ -18,9 +18,9 @@ public class StudyTask
 
     public static StudyTask Fetch(int id)
     {
-        StudyTask task = null;
+        StudyTask task;
 
-        SqliteConnection connection = new SqliteConnection("Data Source=../StudyPlan.db");
+        SqliteConnection connection = new SqliteConnection("Data Source=./study-plan/StudyPlan.db");
         connection.Open();
         var command = connection.CreateCommand();
         command.CommandText = @"SELECT tasks.name, tasks.estimatedTime, subjects.id, subjects.name, tasks.dueDate FROM tasks INNER JOIN subjects ON tasks.subjectId = subjects.id WHERE tasks.id = $id";
@@ -28,20 +28,18 @@ public class StudyTask
 
         using (var reader = command.ExecuteReader())
         {
-            while (reader.Read())
-            {
-                task = new StudyTask(
-                    reader.GetString(0),
-                    TimeSpan.Parse(reader.GetString(1)),
-                    new Subject(reader.GetString(3))
-                    {
-                        id = Int32.Parse(reader.GetString(2))
-                    },
-                    DateTime.Parse(reader.GetString(4)))
+            reader.Read();
+            task = new StudyTask(
+                reader.GetString(0),
+                TimeSpan.Parse(reader.GetString(1)),
+                new Subject(reader.GetString(3))
                 {
-                    id = id
-                };
-            }
+                    id = reader.GetInt32(2)
+                },
+                DateTime.Parse(reader.GetString(4)))
+            {
+                id = id
+            };
         }
 
         connection.Close();
@@ -52,7 +50,7 @@ public class StudyTask
     {
         List<StudyTask> tasks = new List<StudyTask>();
 
-        SqliteConnection connection = new SqliteConnection("Data Source=../StudyPlan.db");
+        SqliteConnection connection = new SqliteConnection("Data Source=./study-plan/StudyPlan.db");
         connection.Open();
         var command = connection.CreateCommand();
         command.CommandText = @"SELECT tasks.id, tasks.name, tasks.estimatedTime, subjects.id, subjects.name, tasks.dueDate FROM tasks INNER JOIN subjects ON tasks.subjectId = subjects.id";
@@ -66,11 +64,11 @@ public class StudyTask
                     TimeSpan.Parse(reader.GetString(2)),
                     new Subject(reader.GetString(4))
                     {
-                        id = Int32.Parse(reader.GetString(3))
+                        id = reader.GetInt32(3)
                     },
                     DateTime.Parse(reader.GetString(5)))
                 {
-                    id = Int32.Parse(reader.GetString(0))
+                    id = reader.GetInt32(0)
                 });
             }
         }
@@ -81,7 +79,7 @@ public class StudyTask
 
     public void Create()
     {
-        SqliteConnection connection = new SqliteConnection("Data Source=../StudyPlan.db");
+        SqliteConnection connection = new SqliteConnection("Data Source=./study-plan/StudyPlan.db");
         connection.Open();
 
         var command = connection.CreateCommand();
@@ -98,7 +96,7 @@ public class StudyTask
 
     public void Update()
     {
-        SqliteConnection connection = new SqliteConnection("Data Source=../StudyPlan.db");
+        SqliteConnection connection = new SqliteConnection("Data Source=./study-plan/StudyPlan.db");
         connection.Open();
 
         var command = connection.CreateCommand();
@@ -116,7 +114,7 @@ public class StudyTask
 
     public void Delete()
     {
-        SqliteConnection connection = new SqliteConnection("Data Source=../StudyPlan.db");
+        SqliteConnection connection = new SqliteConnection("Data Source=./study-plan/StudyPlan.db");
         connection.Open();
         var command = connection.CreateCommand();
         command.CommandText = @"DELETE FROM tasks WHERE id = $id";

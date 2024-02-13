@@ -1,4 +1,3 @@
-@using StudyPlan.Data;
 @using System;
 @using System.Text.Json;
 
@@ -40,7 +39,7 @@
     [Parameter]
     public int id { get; set; }
     private StudyTask studyTask;
-    private string estimatedTime;
+    private string estimatedTime = new TimeSpan(0, 30, 0).ToString();
     private List<Subject> subjects;
 
     protected override void OnInitialized()

@@ -14,7 +14,7 @@ public class Subject
     {
         List<Subject> subjects = new List<Subject>();
 
-        SqliteConnection connection = new SqliteConnection("Data Source=../StudyPlan.db");
+        SqliteConnection connection = new SqliteConnection("Data Source=./study-plan/StudyPlan.db");
         connection.Open();
         var command = connection.CreateCommand();
         command.CommandText = @"SELECT * FROM subjects";
@@ -25,7 +25,7 @@ public class Subject
             {
                 subjects.Add(new Subject(reader.GetString(1))
                 {
-                    id = Int32.Parse(reader.GetString(0))
+                    id = reader.GetInt32(0)
                 });
             }
         }
@@ -36,9 +36,9 @@ public class Subject
 
     public static Subject Fetch(int id)
     {
-        Subject subject = null;
+        Subject subject;
 
-        SqliteConnection connection = new SqliteConnection("Data Source=../StudyPlan.db");
+        SqliteConnection connection = new SqliteConnection("Data Source=./study-plan/StudyPlan.db");
         connection.Open();
         var command = connection.CreateCommand();
         command.CommandText = @"SELECT subjects.name FROM subjects WHERE subjects.id = $id";
@@ -46,13 +46,11 @@ public class Subject
 
         using (var reader = command.ExecuteReader())
         {
-            while (reader.Read())
+            reader.Read();
+            subject = new Subject(reader.GetString(0))
             {
-                subject = new Subject(reader.GetString(0))
-                {
-                    id = id
-                };
-            }
+                id = id
+            };
         }
 
         connection.Close();
@@ -61,7 +59,7 @@ public class Subject
 
     public void Create()
     {
-        SqliteConnection connection = new SqliteConnection("Data Source=../StudyPlan.db");
+        SqliteConnection connection = new SqliteConnection("Data Source=./study-plan/StudyPlan.db");
         connection.Open();
 
         var command = connection.CreateCommand();
@@ -75,7 +73,7 @@ public class Subject
 
     public void Update()
     {
-        SqliteConnection connection = new SqliteConnection("Data Source=../StudyPlan.db");
+        SqliteConnection connection = new SqliteConnection("Data Source=./study-plan/StudyPlan.db");
         connection.Open();
 
         var command = connection.CreateCommand();
@@ -90,7 +88,7 @@ public class Subject
 
     public void Delete()
     {
-        SqliteConnection connection = new SqliteConnection("Data Source=../StudyPlan.db");
+        SqliteConnection connection = new SqliteConnection("Data Source=./study-plan/StudyPlan.db");
         connection.Open();
         var command = connection.CreateCommand();
         command.CommandText = @"DELETE FROM subjects WHERE id = $id";
