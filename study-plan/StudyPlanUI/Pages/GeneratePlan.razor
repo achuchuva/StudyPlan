@@ -4,8 +4,6 @@
 @if (!planGenerated)
 {
     <h1>Plan Settings</h1>
-    <button @onclick="CreatePlan">Create Plan</button>
-    <br><br>
     <label for="study-period">Length of study period:</label>
     <select name="study-period" id="study-period" @bind="studyPeriod">
         <option value="00:30:00">30 minutes</option>
@@ -27,6 +25,8 @@
     <br><br>
     <label>Weekends off:</label>
     <input type="checkbox" @bind="weekendsOff" />
+    <br><br>
+    <button @onclick="CreatePlan">Create Plan</button>
 }
 else
 {

@@ -5,7 +5,7 @@
     @foreach(StudyBlock studyBlock in day.StudyBlocks)
     {
         <div class="study-block" style="@GetStyle(studyBlock.startTime, studyBlock.duration)">
-            @studyBlock.startTime.ToShortTimeString() - @studyBlock.task.name
+            @studyBlock.startTime.ToShortTimeString() - @GetFinishingTime(studyBlock) - @studyBlock.task.name
         </div>
     }
 </div>
@@ -20,5 +20,10 @@
         double height = (duration.TotalMinutes);
 
         return $"top: {position * 1.5}px; height: {height * 1.5}px";
+    }
+
+    private string GetFinishingTime(StudyBlock studyBlock)
+    {
+        return studyBlock.startTime.Add(studyBlock.duration).ToShortTimeString();
     }
 }

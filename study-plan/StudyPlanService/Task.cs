@@ -138,6 +138,11 @@ public class Task
 
     public virtual double GetPriority(DateTime currentDate)
     {
+        if (estimatedTime == TimeSpan.Zero)
+        {
+            return 0.0;
+        }
+
         Random random = new Random();
         return random.NextDouble();
     }
