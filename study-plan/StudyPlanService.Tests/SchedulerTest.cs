@@ -4,8 +4,8 @@ public class SchedulerTest
 {
     private List<Task> tasks = new List<Task>
         {
-            new Task("Exercise 11F", new TimeSpan(3, 0, 0), new Subject("Maths"), DateTime.Today.AddDays(2)),
-            new Task("Read 12 Angry Men", new TimeSpan(2, 0, 0), new Subject("English"), DateTime.Today.AddDays(4)),
+            new Assignment("Exercise 11F", new TimeSpan(3, 0, 0), new Subject("Maths"), DateTime.Today.AddDays(2)),
+            new Assignment("Read 12 Angry Men", new TimeSpan(2, 0, 0), new Subject("English"), DateTime.Today.AddDays(4)),
         };
 
     [Fact]
