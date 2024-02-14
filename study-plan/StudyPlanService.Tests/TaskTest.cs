@@ -2,7 +2,6 @@ namespace StudyPlanService.Tests;
 
 public class TaskTest
 {
-
     [Fact]
     public void TestDecreaseEstimatedTime()
     {

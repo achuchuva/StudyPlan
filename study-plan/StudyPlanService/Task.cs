@@ -25,23 +25,13 @@ public class Task
         SqliteConnection connection = new SqliteConnection("Data Source=./study-plan/StudyPlan.db");
         connection.Open();
         var command = connection.CreateCommand();
-        command.CommandText = @"SELECT tasks.name, tasks.estimatedTime, subjects.id, subjects.name, tasks.dueDate FROM tasks INNER JOIN subjects ON tasks.subjectId = subjects.id WHERE tasks.id = $id";
+        command.CommandText = @"SELECT tasks.id, tasks.name, tasks.estimatedTime, subjects.id, subjects.name, tasks.dueDate, tasks.type FROM tasks INNER JOIN subjects ON tasks.subjectId = subjects.id WHERE tasks.id = $id";
         command.Parameters.AddWithValue("$id", id);
 
         using (var reader = command.ExecuteReader())
         {
             reader.Read();
-            task = new Task(
-                reader.GetString(0),
-                TimeSpan.Parse(reader.GetString(1)),
-                new Subject(reader.GetString(3))
-                {
-                    id = reader.GetInt32(2)
-                },
-                DateTime.Parse(reader.GetString(4)))
-            {
-                id = id
-            };
+            task = TaskFactory.CreateTask(reader);
         }
 
         connection.Close();
@@ -55,23 +45,13 @@ public class Task
         SqliteConnection connection = new SqliteConnection("Data Source=./study-plan/StudyPlan.db");
         connection.Open();
         var command = connection.CreateCommand();
-        command.CommandText = @"SELECT tasks.id, tasks.name, tasks.estimatedTime, subjects.id, subjects.name, tasks.dueDate FROM tasks INNER JOIN subjects ON tasks.subjectId = subjects.id";
+        command.CommandText = @"SELECT tasks.id, tasks.name, tasks.estimatedTime, subjects.id, subjects.name, tasks.dueDate, tasks.type FROM tasks INNER JOIN subjects ON tasks.subjectId = subjects.id";
 
         using (var reader = command.ExecuteReader())
         {
             while (reader.Read())
             {
-                tasks.Add(new Task(
-                    reader.GetString(1),
-                    TimeSpan.Parse(reader.GetString(2)),
-                    new Subject(reader.GetString(4))
-                    {
-                        id = reader.GetInt32(3)
-                    },
-                    DateTime.Parse(reader.GetString(5)))
-                {
-                    id = reader.GetInt32(0)
-                });
+                tasks.Add(TaskFactory.CreateTask(reader));
             }
         }
 
@@ -85,11 +65,12 @@ public class Task
         connection.Open();
 
         var command = connection.CreateCommand();
-        command.CommandText = @"INSERT INTO tasks (name, subjectId, estimatedTime, dueDate) VALUES ($name, $subjectId, $estimatedTime, $dueDate)";
+        command.CommandText = @"INSERT INTO tasks (name, subjectId, estimatedTime, dueDate, type) VALUES ($name, $subjectId, $estimatedTime, $dueDate, $type)";
         command.Parameters.AddWithValue("$name", name);
         command.Parameters.AddWithValue("$subjectId", subject.id);
         command.Parameters.AddWithValue("$estimatedTime", estimatedTime.ToString());
         command.Parameters.AddWithValue("$dueDate", dueDate.ToString());
+        command.Parameters.AddWithValue("$type", "Assignment");
 
         id = Convert.ToInt32(command.ExecuteScalar());
 
@@ -138,12 +119,6 @@ public class Task
 
     public virtual double GetPriority(DateTime currentDate)
     {
-        if (estimatedTime == TimeSpan.Zero)
-        {
-            return 0.0;
-        }
-
-        Random random = new Random();
-        return random.NextDouble();
+        return 0.0;
     }
 }
