@@ -1,11 +1,23 @@
+namespace StudyPlanService;
+
 public class Scheduler
 {
     public TimeSpan studyPeriod = TimeSpan.FromHours(1);
-    private List<StudyTask> tasks;
+    public TimeSpan breakPeriod = TimeSpan.Zero;
+    public bool weekendsOff;
+    private List<Task> tasks;
 
-    public Scheduler(List<StudyTask> tasks)
+    public Scheduler(List<Task> tasks)
     {
-        this.tasks = new List<StudyTask>(tasks);
+        this.tasks = new List<Task>(tasks);
+    }
+
+    public Scheduler(List<Task> tasks, TimeSpan studyPeriod, TimeSpan breakPeriod, bool weekendsOff)
+    {
+        this.tasks = new List<Task>(tasks);
+        this.studyPeriod = studyPeriod;
+        this.breakPeriod = breakPeriod;
+        this.weekendsOff = weekendsOff;
     }
 
     public virtual WeekPlan CreatePlan()
@@ -20,14 +32,15 @@ public class Scheduler
         // Loop through the days of the week
         foreach (DayPlan day in plannedWeek.Days)
         {
-            // Skip ahead if all tasks are already complete
-            if (tasks.Count == 0)
-            {
-                break;
-            }
-
             // Assign the study blocks of each day
-            // Should be part of the DayPlan class
+            // Check if the given day isn't on the weekend if the user wants a break on the weekend
+            if (weekendsOff)
+            {
+                if (day.date.DayOfWeek == DayOfWeek.Saturday || day.date.DayOfWeek == DayOfWeek.Sunday)
+                {
+                    continue;
+                }
+            }
             AssignStudyBlocks(day);
         }
 
@@ -43,12 +56,6 @@ public class Scheduler
             // While there is still time for studying left in the TimeSpan
             while (timeBlock.duration > TimeSpan.Zero)
             {
-                // Ensure there are still some tasks left to complete
-                if (tasks.Count == 0)
-                {
-                    return;
-                }
-
                 // Get the time available in the time block
                 TimeSpan remainingStudyTime = GetTimeAvailableInTimeBlock(timeBlock.duration);
 
@@ -56,7 +63,20 @@ public class Scheduler
                 DateTime currentTime = new DateTime(day.date.Year, day.date.Month, day.date.Day, timeBlock.startTime.Hour, timeBlock.startTime.Minute, timeBlock.startTime.Second);
 
                 // Select the task
-                StudyTask selectedTask = SelectTask(currentTime);
+                Task? selectedTask = SelectTask(currentTime);
+                if (selectedTask == null)
+                {
+                    // Break out if the tasks have 0 priority
+                    // Either they're already completed or aren't relevant enough to be scheduled
+                    break;
+                }
+
+                if (selectedTask is ExamStudy && IsTaskInDay(selectedTask, day))
+                {
+                    // The task is an exam study variation
+                    // We only want one exam study block per day
+                    break;
+                }
 
                 // Get the study time based on the time available in the time block and the selected task
                 TimeSpan studyTime = GetTimeRemainingInTask(remainingStudyTime, selectedTask);
@@ -64,14 +84,12 @@ public class Scheduler
                 // Create a new study block and add it to the day
                 day.StudyBlocks.Add(new StudyBlock(selectedTask, timeBlock.startTime, studyTime));
 
-                // Update the time block with the study time
-                timeBlock.UpdateTimeBlock(studyTime);
+                // Update the time block with the study time and the break period
+                // This way, the next study block will acknowledge the break period
+                timeBlock.UpdateTimeBlock(studyTime + breakPeriod);
 
                 // Decrease the selected task's estimated time to completion
                 selectedTask.DecreaseEstimatedTime(studyTime);
-
-                // Update the task index for future task selection
-                UpdateTasks(selectedTask);
             }
         }
     }
@@ -89,17 +107,15 @@ public class Scheduler
         }
     }
 
-    public virtual StudyTask SelectTask(DateTime currentDate)
+    public virtual Task? SelectTask(DateTime currentDate)
     {
-        // Should likely be done in a TaskManager class separately
         // Get the task based on index
         double priority = double.NegativeInfinity;
         int taskIndex = 0;
 
         for (int i = 0; i < tasks.Count; i++)
         {
-            TimeSpan remainingTime = tasks[i].dueDate - currentDate;
-            double taskPriority = tasks[i].estimatedTime.TotalSeconds / remainingTime.TotalSeconds;
+            double taskPriority = tasks[i].GetPriority(currentDate);
 
             if (taskPriority > priority)
             {
@@ -107,10 +123,28 @@ public class Scheduler
                 taskIndex = i;
             }
         }
+
+        if (priority <= 0.0)
+        {
+            return null;
+        }
+
         return tasks[taskIndex];
     }
 
-    public virtual TimeSpan GetTimeRemainingInTask(TimeSpan studyTime, StudyTask task)
+    public bool IsTaskInDay(Task task, DayPlan day)
+    {
+        foreach (StudyBlock studyBlock in day.StudyBlocks)
+        {
+            if (studyBlock.task == task)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public virtual TimeSpan GetTimeRemainingInTask(TimeSpan studyTime, Task task)
     {
         // Return the minimum of study time and the task's estimated time
         if (task.estimatedTime >= studyTime)
@@ -120,16 +154,6 @@ public class Scheduler
         else
         {
             return task.estimatedTime;
-        }
-    }
-
-    public virtual void UpdateTasks(StudyTask task)
-    {
-        // Also done in TaskManager
-        // Remove task if it has been completed
-        if (task.estimatedTime == TimeSpan.Zero)
-        {
-            tasks.Remove(task);
         }
     }
 }

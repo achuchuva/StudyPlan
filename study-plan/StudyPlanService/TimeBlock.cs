@@ -1,3 +1,5 @@
+namespace StudyPlanService;
+
 public class TimeBlock
 {
     public TimeOnly startTime { get; set; }

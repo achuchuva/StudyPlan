@@ -6,8 +6,8 @@ public class Program
     {
         // StudyTaskManager studyTaskManager = new StudyTaskManager();
 
-        // List<StudyTask> newTasks = StudyTask.FetchAll();
-        // foreach (StudyTask task in newTasks)
+        // List<Task> newTasks = Task.FetchAll();
+        // foreach (Task task in newTasks)
         // {
         //     Console.WriteLine(task.id);
         //     Console.WriteLine(task.name);

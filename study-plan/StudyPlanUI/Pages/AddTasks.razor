@@ -1,6 +1,7 @@
 ﻿@page "/addtasks"
 @using System;
 @using System.Text.Json;
+@using StudyPlanService;
 
 <h1>Add Tasks</h1>
 <br>
@@ -42,7 +43,7 @@
 
     private void AddTask()
     {
-        StudyTask task = new StudyTask(name, TimeSpan.Parse(estimatedTime), Subject.Fetch(subjectId), date);
+        StudyPlanService.Task task = new StudyPlanService.Task(name, TimeSpan.Parse(estimatedTime), Subject.Fetch(subjectId), date);
         task.Create();
         Console.WriteLine("Task created successfully!");
     }

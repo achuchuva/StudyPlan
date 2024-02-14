@@ -1,9 +1,11 @@
+namespace StudyPlanService;
+
 public class StudyBlock : TimeBlock
 {
-    public StudyBlock(StudyTask task, TimeOnly startTime, TimeSpan duration) : base (startTime, duration)
+    public StudyBlock(Task task, TimeOnly startTime, TimeSpan duration) : base (startTime, duration)
     {
         this.task = task;
     }
 
-    public StudyTask task { get; set; }
+    public Task task { get; set; }
 }

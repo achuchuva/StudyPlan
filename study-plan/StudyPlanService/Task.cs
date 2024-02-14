@@ -1,8 +1,10 @@
 using Microsoft.Data.Sqlite;
 
-public class StudyTask
+namespace StudyPlanService;
+
+public class Task
 {
-    public StudyTask(string name, TimeSpan estimatedTime, Subject subject, DateTime dueDate)
+    public Task(string name, TimeSpan estimatedTime, Subject subject, DateTime dueDate)
     {
         this.name = name;
         this.estimatedTime = estimatedTime;
@@ -16,9 +18,9 @@ public class StudyTask
     public Subject subject { get; set; }
     public DateTime dueDate { get; set; }
 
-    public static StudyTask Fetch(int id)
+    public static Task Fetch(int id)
     {
-        StudyTask task;
+        Task task;
 
         SqliteConnection connection = new SqliteConnection("Data Source=./study-plan/StudyPlan.db");
         connection.Open();
@@ -29,7 +31,7 @@ public class StudyTask
         using (var reader = command.ExecuteReader())
         {
             reader.Read();
-            task = new StudyTask(
+            task = new Task(
                 reader.GetString(0),
                 TimeSpan.Parse(reader.GetString(1)),
                 new Subject(reader.GetString(3))
@@ -46,9 +48,9 @@ public class StudyTask
         return task;
     }
 
-    public static List<StudyTask> FetchAll()
+    public static List<Task> FetchAll()
     {
-        List<StudyTask> tasks = new List<StudyTask>();
+        List<Task> tasks = new List<Task>();
 
         SqliteConnection connection = new SqliteConnection("Data Source=./study-plan/StudyPlan.db");
         connection.Open();
@@ -59,7 +61,7 @@ public class StudyTask
         {
             while (reader.Read())
             {
-                tasks.Add(new StudyTask(
+                tasks.Add(new Task(
                     reader.GetString(1),
                     TimeSpan.Parse(reader.GetString(2)),
                     new Subject(reader.GetString(4))
@@ -132,5 +134,11 @@ public class StudyTask
         {
             estimatedTime = TimeSpan.Zero;
         }
+    }
+
+    public virtual double GetPriority(DateTime currentDate)
+    {
+        Random random = new Random();
+        return random.NextDouble();
     }
 }

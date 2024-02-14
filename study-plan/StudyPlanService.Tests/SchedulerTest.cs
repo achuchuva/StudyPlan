@@ -2,16 +2,16 @@ namespace StudyPlanService.Tests;
 
 public class SchedulerTest
 {
-    private List<StudyTask> tasks = new List<StudyTask>
+    private List<Task> tasks = new List<Task>
         {
-            new StudyTask("Exercise 11F", new TimeSpan(3, 0, 0), new Subject("Maths"), DateTime.Today.AddDays(2)),
-            new StudyTask("Read 12 Angry Men", new TimeSpan(2, 0, 0), new Subject("English"), DateTime.Today.AddDays(4)),
+            new Task("Exercise 11F", new TimeSpan(3, 0, 0), new Subject("Maths"), DateTime.Today.AddDays(2)),
+            new Task("Read 12 Angry Men", new TimeSpan(2, 0, 0), new Subject("English"), DateTime.Today.AddDays(4)),
         };
 
     [Fact]
     public void TestGetTimeAvailableInTimeBlock()
     {
-        TimeSpan studyTime = new TimeSpan(1, 0, 0);
+        TimeSpan studyTime = new TimeSpan(0, 30, 0);
         TimeSpan result = new Scheduler(tasks).GetTimeAvailableInTimeBlock(studyTime);
 
         Assert.Equal(studyTime, result);
@@ -19,7 +19,7 @@ public class SchedulerTest
         studyTime = new TimeSpan(3, 0, 0);
         result = new Scheduler(tasks).GetTimeAvailableInTimeBlock(studyTime);
 
-        Assert.Equal(new TimeSpan(1, 30, 0), result);
+        Assert.Equal(new TimeSpan(1, 0, 0), result);
     }
 
     [Fact]
@@ -27,7 +27,7 @@ public class SchedulerTest
     {
         Scheduler algorithm = new Scheduler(tasks);
 
-        StudyTask selectedTask = algorithm.SelectTask(DateTime.Today);
+        Task selectedTask = algorithm.SelectTask(DateTime.Today);
 
         Assert.Equal(tasks[0], selectedTask);
     }

@@ -1,5 +1,6 @@
 @using System;
 @using System.Text.Json;
+@using StudyPlanService;
 
 <h1>Edit Task</h1>
 <br>
@@ -38,13 +39,13 @@
 @code {
     [Parameter]
     public int id { get; set; }
-    private StudyTask studyTask;
+    private StudyPlanService.Task studyTask;
     private string estimatedTime = new TimeSpan(0, 30, 0).ToString();
     private List<Subject> subjects;
 
     protected override void OnInitialized()
     {
-        studyTask = StudyTask.Fetch(id);
+        studyTask = StudyPlanService.Task.Fetch(id);
         subjects = Subject.FetchAll();
     }
 

@@ -1,3 +1,5 @@
+namespace StudyPlanService;
+
 public class WeekPlan
 {
     private DayPlan[] days = new DayPlan[7];

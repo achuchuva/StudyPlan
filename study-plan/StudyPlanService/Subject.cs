@@ -1,5 +1,7 @@
 using Microsoft.Data.Sqlite;
 
+namespace StudyPlanService;
+
 public class Subject
 {
     public Subject(string name)

@@ -1,3 +1,5 @@
+namespace StudyPlanService;
+
 public class DayPlan
 {
     public DateOnly date { get; set; }
